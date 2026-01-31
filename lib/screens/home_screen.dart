@@ -4,6 +4,7 @@ import '../providers/study_provider.dart';
 import '../providers/whitelist_provider.dart';
 import '../widgets/quote_card.dart';
 import '../widgets/d_day_widget.dart';
+import '../widgets/wallpaper_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -63,6 +64,10 @@ class HomeScreen extends StatelessWidget {
 
             // Today's study summary
             _TodaySummaryCard(),
+            const SizedBox(height: 20),
+
+            // Wallpaper card with quote + D-Day
+            const WallpaperCard(ddayText: null),
             const SizedBox(height: 20),
 
             // Motivational quote

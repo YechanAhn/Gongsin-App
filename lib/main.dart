@@ -6,6 +6,7 @@ import 'providers/theme_provider.dart';
 import 'providers/timer_provider.dart';
 import 'providers/study_provider.dart';
 import 'providers/whitelist_provider.dart';
+import 'providers/wallpaper_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +27,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => TimerProvider()),
         ChangeNotifierProvider(create: (_) => StudyProvider()),
         ChangeNotifierProvider(create: (_) => WhitelistProvider()),
+        ChangeNotifierProvider(create: (_) => WallpaperProvider()),
       ],
       child: const GongsinApp(),
     ),

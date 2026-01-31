@@ -1,0 +1,1546 @@
+<!--
+  공신앱 (Gongsin App) - Phase 1 MVP Wireframes
+  Open this file in a browser to view all screens
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>공신앱 Wireframes</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, 'Noto Sans KR', sans-serif;
+    background: #f0eef5;
+    padding: 40px 20px;
+  }
+  h1 {
+    text-align: center;
+    color: #2D2D3A;
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    text-align: center;
+    color: #8E8E9A;
+    font-size: 14px;
+    margin-bottom: 40px;
+  }
+  .screen-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 32px;
+    margin-bottom: 48px;
+  }
+  .screen-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .screen-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #9182A8;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+  }
+  .phone {
+    width: 320px;
+    height: 640px;
+    background: #F8F7FC;
+    border-radius: 36px;
+    border: 3px solid #ddd8e8;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  }
+  .phone.dark {
+    background: #1A1A2E;
+    border-color: #3A3A50;
+  }
+  .phone.dark .status-bar { color: #EAEAF0; }
+  .phone.dark .nav-bar { background: #25253A; border-color: #3A3A50; }
+  .phone.dark .nav-item { color: #686878; }
+  .phone.dark .nav-item.active { color: #C4B5D8; }
+
+  .status-bar {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    font-size: 11px;
+    color: #2D2D3A;
+    font-weight: 500;
+  }
+  .content {
+    height: 556px;
+    overflow-y: auto;
+    padding: 0;
+  }
+  .content::-webkit-scrollbar { width: 0; }
+  .nav-bar {
+    height: 48px;
+    background: #fff;
+    border-top: 1px solid #EEECF2;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  .nav-item {
+    font-size: 10px;
+    text-align: center;
+    color: #B8B8C4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .nav-item.active { color: #9182A8; font-weight: 600; }
+  .nav-icon { font-size: 18px; }
+
+  /* Components */
+  .app-title {
+    padding: 16px 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .app-title h2 {
+    font-size: 24px;
+    font-weight: 800;
+    color: #2D2D3A;
+  }
+  .badge {
+    background: rgba(168,216,200,0.2);
+    color: #6BAA96;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 3px 7px;
+    border-radius: 6px;
+    letter-spacing: 1.5px;
+  }
+
+  .card {
+    margin: 10px 16px;
+    padding: 16px;
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #EEECF2;
+  }
+
+  .dday-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .dday-icon {
+    width: 38px; height: 38px;
+    background: rgba(168,216,200,0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6BAA96;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .dday-info { flex: 1; }
+  .dday-label { font-size: 11px; color: #8E8E9A; }
+  .dday-date { font-size: 9px; color: #B8B8C4; }
+  .dday-count {
+    font-size: 22px;
+    font-weight: 700;
+    color: #B8A9C9;
+    letter-spacing: -1px;
+  }
+
+  .summary-row {
+    display: flex;
+    gap: 0;
+  }
+  .summary-item {
+    flex: 1;
+    text-align: center;
+    padding: 8px 0;
+  }
+  .summary-divider {
+    width: 1px;
+    background: #EEECF2;
+    margin: 4px 0;
+  }
+  .summary-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #B8A9C9;
+  }
+  .summary-value.green { color: #A8D8C8; }
+  .summary-label {
+    font-size: 10px;
+    color: #8E8E9A;
+    margin-top: 2px;
+  }
+  .section-icon {
+    display: inline;
+    font-size: 13px;
+    margin-right: 4px;
+  }
+  .section-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #2D2D3A;
+    margin-bottom: 12px;
+  }
+
+  .quote-card {
+    margin: 10px 16px;
+    padding: 22px;
+    background: linear-gradient(135deg, rgba(184,169,201,0.08), rgba(242,196,206,0.08));
+    border-radius: 16px;
+    border: 1px solid rgba(184,169,201,0.15);
+    text-align: center;
+  }
+  .quote-mark {
+    font-size: 28px;
+    color: rgba(184,169,201,0.3);
+    line-height: 0.6;
+  }
+  .quote-text {
+    font-size: 13px;
+    color: #2D2D3A;
+    line-height: 1.7;
+    margin: 8px 0;
+    font-weight: 500;
+  }
+  .quote-author {
+    font-size: 10px;
+    color: #B8A9C9;
+    font-weight: 500;
+  }
+  .quote-hint {
+    font-size: 8px;
+    color: #B8B8C4;
+    margin-top: 6px;
+  }
+
+  .focus-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .focus-icon {
+    width: 38px; height: 38px;
+    background: rgba(184,169,201,0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+  .focus-info { flex: 1; }
+  .focus-title { font-size: 12px; font-weight: 600; color: #2D2D3A; }
+  .focus-sub { font-size: 10px; color: #8E8E9A; }
+  .toggle {
+    width: 40px; height: 22px;
+    border-radius: 11px;
+    background: #EEECF2;
+    position: relative;
+  }
+  .toggle.on { background: rgba(184,169,201,0.3); }
+  .toggle::after {
+    content: '';
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: #B8B8C4;
+    position: absolute;
+    top: 2px; left: 2px;
+  }
+  .toggle.on::after {
+    background: #B8A9C9;
+    left: 20px;
+  }
+
+  .btn-primary {
+    margin: 10px 16px;
+    padding: 14px;
+    background: #B8A9C9;
+    color: #fff;
+    border-radius: 14px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  /* Timer Screen */
+  .timer-title {
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2D2D3A;
+    padding: 16px 0 12px;
+  }
+  .chip-row {
+    display: flex;
+    gap: 6px;
+    padding: 0 16px;
+    overflow-x: auto;
+    margin-bottom: 10px;
+  }
+  .chip {
+    padding: 7px 14px;
+    border-radius: 16px;
+    font-size: 11px;
+    background: #F2EFF8;
+    color: #2D2D3A;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .chip.selected {
+    background: rgba(184,169,201,0.2);
+    border: 1.5px solid #B8A9C9;
+    color: #9182A8;
+    font-weight: 600;
+  }
+  .mode-toggle {
+    display: flex;
+    margin: 4px 50px;
+    background: #F2EFF8;
+    border-radius: 12px;
+    padding: 3px;
+  }
+  .mode-btn {
+    flex: 1;
+    text-align: center;
+    padding: 8px;
+    font-size: 11px;
+    border-radius: 9px;
+    color: rgba(45,45,58,0.4);
+  }
+  .mode-btn.active {
+    background: #fff;
+    color: #2D2D3A;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  }
+
+  .timer-ring {
+    width: 200px; height: 200px;
+    margin: 24px auto;
+    border-radius: 50%;
+    border: 5px solid #EEECF2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+  }
+  .timer-ring.active {
+    border-color: transparent;
+    background: conic-gradient(#B8A9C9 0deg, #B8A9C9 120deg, #EEECF2 120deg);
+    -webkit-mask: radial-gradient(closest-side, transparent 93%, black 93.5%);
+    mask: radial-gradient(closest-side, transparent 93%, black 93.5%);
+  }
+  .timer-ring-inner {
+    width: 188px; height: 188px;
+    border-radius: 50%;
+    background: #F8F7FC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+  }
+  .timer-time {
+    font-size: 40px;
+    font-weight: 300;
+    color: #2D2D3A;
+    letter-spacing: 2px;
+    font-variant-numeric: tabular-nums;
+  }
+  .timer-elapsed {
+    font-size: 11px;
+    color: #8E8E9A;
+    margin-top: 2px;
+  }
+  .pulse-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #B8A9C9;
+    margin-top: 4px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 20px;
+  }
+  .ctrl-btn {
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+  .ctrl-btn.secondary {
+    border: 1.5px solid #EEECF2;
+    background: transparent;
+    color: #8E8E9A;
+  }
+  .ctrl-btn.stop {
+    border: 1.5px solid rgba(229,115,115,0.4);
+    background: transparent;
+    color: #E57373;
+  }
+  .ctrl-btn.primary {
+    width: 64px; height: 64px;
+    background: #B8A9C9;
+    color: #fff;
+    font-size: 28px;
+    box-shadow: 0 4px 16px rgba(184,169,201,0.3);
+  }
+
+  /* Calendar */
+  .cal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .cal-nav {
+    color: rgba(45,45,58,0.3);
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .cal-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2D2D3A;
+  }
+  .cal-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-size: 9px;
+    color: #B8B8C4;
+    margin-bottom: 4px;
+  }
+  .cal-weekdays span:first-child { color: #E57373; }
+  .cal-weekdays span:last-child { color: #64B5F6; }
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+  }
+  .cal-day {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #2D2D3A;
+  }
+  .cal-day.empty { visibility: hidden; }
+  .cal-day.today {
+    border: 1.5px solid #B8A9C9;
+    font-weight: 600;
+    color: #B8A9C9;
+  }
+  .cal-day.l1 { background: rgba(184,169,201,0.12); }
+  .cal-day.l2 { background: rgba(184,169,201,0.25); }
+  .cal-day.l3 { background: rgba(184,169,201,0.4); }
+  .cal-day.l4 { background: rgba(184,169,201,0.6); }
+  .cal-day.l5 { background: rgba(184,169,201,0.85); color: #fff; }
+  .cal-hours {
+    font-size: 6px;
+    color: rgba(45,45,58,0.5);
+    margin-top: 1px;
+  }
+  .cal-day.l5 .cal-hours { color: rgba(255,255,255,0.7); }
+  .cal-legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    margin-top: 10px;
+    font-size: 8px;
+    color: #B8B8C4;
+  }
+  .cal-legend-box {
+    width: 10px; height: 10px;
+    border-radius: 2px;
+  }
+
+  /* Stats */
+  .stat-row {
+    display: flex;
+    gap: 0;
+  }
+  .stat-item {
+    flex: 1;
+    text-align: center;
+    padding: 10px 0;
+  }
+  .stat-icon { font-size: 14px; margin-bottom: 4px; }
+  .stat-value {
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .stat-label {
+    font-size: 9px;
+    color: #8E8E9A;
+    margin-top: 2px;
+  }
+
+  /* Pie */
+  .pie-area {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .pie-chart {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: conic-gradient(
+      #B8A9C9 0deg 130deg,
+      #F2C4CE 130deg 230deg,
+      #A8D8C8 230deg 310deg,
+      #F5D5A0 310deg 360deg
+    );
+    -webkit-mask: radial-gradient(closest-side, transparent 55%, black 55.5%);
+    mask: radial-gradient(closest-side, transparent 55%, black 55.5%);
+  }
+  .pie-legend { font-size: 10px; color: #2D2D3A; line-height: 1.8; }
+  .pie-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 2px;
+    margin-right: 4px;
+  }
+
+  /* Session list */
+  .session-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+  }
+  .session-bar {
+    width: 3px; height: 24px;
+    border-radius: 2px;
+  }
+  .session-name { flex: 1; font-size: 11px; color: #2D2D3A; }
+  .session-dur { font-size: 10px; color: #8E8E9A; font-weight: 500; }
+
+  /* Settings */
+  .setting-section {
+    padding: 4px 20px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #B8A9C9;
+  }
+  .setting-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    margin: 2px 12px;
+    border-radius: 12px;
+  }
+  .setting-icon {
+    width: 32px; height: 32px;
+    background: #F2EFF8;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+  .setting-info { flex: 1; }
+  .setting-title { font-size: 12px; font-weight: 500; color: #2D2D3A; }
+  .setting-sub { font-size: 9px; color: #8E8E9A; }
+  .setting-arrow { color: #B8B8C4; font-size: 14px; }
+
+  /* Whitelist */
+  .search-bar {
+    margin: 8px 16px;
+    padding: 10px 14px;
+    background: #F2EFF8;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: rgba(45,45,58,0.3);
+  }
+  .filter-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 16px;
+  }
+  .filter-chip {
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 10px;
+    background: #F2EFF8;
+    color: rgba(45,45,58,0.5);
+  }
+  .filter-chip.active {
+    background: rgba(184,169,201,0.15);
+    color: #B8A9C9;
+    font-weight: 600;
+    border: 1px solid rgba(184,169,201,0.3);
+  }
+  .filter-count {
+    flex: 1;
+    text-align: right;
+    font-size: 10px;
+    color: #B8A9C9;
+    font-weight: 500;
+  }
+  .app-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+  }
+  .app-icon {
+    width: 34px; height: 34px;
+    background: #F2EFF8;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+  .app-info { flex: 1; }
+  .app-name { font-size: 12px; font-weight: 500; color: #2D2D3A; }
+  .app-pkg { font-size: 8px; color: #B8B8C4; }
+
+  /* Wallpaper preview */
+  .wallpaper-preview {
+    margin: 10px 16px;
+    border-radius: 14px;
+    overflow: hidden;
+    position: relative;
+    height: 160px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+  .wallpaper-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    padding: 20px;
+  }
+  .wallpaper-quote {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.6;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  }
+  .wallpaper-dday {
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 8px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  }
+  .wallpaper-credit {
+    position: absolute;
+    bottom: 6px;
+    right: 10px;
+    font-size: 7px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  /* Completion dialog */
+  .dialog-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+  .dialog {
+    width: 240px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 28px;
+    text-align: center;
+  }
+  .dialog-icon {
+    width: 50px; height: 50px;
+    background: rgba(168,216,200,0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    font-size: 24px;
+    color: #6BAA96;
+  }
+  .dialog-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2D2D3A;
+    margin-bottom: 4px;
+  }
+  .dialog-sub {
+    font-size: 12px;
+    color: #8E8E9A;
+    margin-bottom: 16px;
+  }
+  .dialog-btn {
+    width: 100%;
+    padding: 12px;
+    background: #B8A9C9;
+    color: #fff;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .page-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #2D2D3A;
+    padding: 16px 20px 0;
+  }
+  .page-subtitle {
+    font-size: 11px;
+    color: #8E8E9A;
+    padding: 2px 20px 0;
+  }
+
+  /* Info banner */
+  .info-banner {
+    margin: 10px 16px;
+    padding: 12px 14px;
+    background: linear-gradient(135deg, rgba(168,216,200,0.08), rgba(184,169,201,0.08));
+    border-radius: 12px;
+    border: 1px solid rgba(168,216,200,0.2);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 10px;
+    color: #2D2D3A;
+    line-height: 1.5;
+  }
+  .info-icon { color: #6BAA96; font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+
+  /* Subject list in settings */
+  .subject-list { margin: 0 16px; }
+  .subject-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 0;
+    font-size: 12px;
+    color: #2D2D3A;
+  }
+  .subject-dot {
+    width: 8px; height: 8px;
+    border-radius: 2px;
+  }
+  .add-btn {
+    margin: 6px 16px;
+    padding: 10px;
+    border: 1.5px solid #B8A9C9;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 11px;
+    color: #B8A9C9;
+    font-weight: 500;
+  }
+
+  /* Dark mode screens */
+  .phone.dark .app-title h2 { color: #EAEAF0; }
+  .phone.dark .badge { background: rgba(184,232,216,0.15); color: #B8E8D8; }
+  .phone.dark .card {
+    background: #25253A;
+    border-color: #3A3A50;
+  }
+  .phone.dark .dday-icon { background: rgba(184,232,216,0.1); color: #B8E8D8; }
+  .phone.dark .dday-label { color: #9898A8; }
+  .phone.dark .dday-date { color: #686878; }
+  .phone.dark .dday-count { color: #C4B5D8; }
+  .phone.dark .summary-value { color: #C4B5D8; }
+  .phone.dark .summary-value.green { color: #B8E8D8; }
+  .phone.dark .summary-label { color: #9898A8; }
+  .phone.dark .summary-divider { background: #3A3A50; }
+  .phone.dark .section-title { color: #EAEAF0; }
+  .phone.dark .quote-card {
+    background: linear-gradient(135deg, rgba(196,181,216,0.08), rgba(245,208,216,0.08));
+    border-color: rgba(196,181,216,0.15);
+  }
+  .phone.dark .quote-mark { color: rgba(196,181,216,0.3); }
+  .phone.dark .quote-text { color: #EAEAF0; }
+  .phone.dark .quote-author { color: #C4B5D8; }
+  .phone.dark .quote-hint { color: #686878; }
+  .phone.dark .btn-primary { background: #C4B5D8; color: #1A1A2E; }
+</style>
+</head>
+<body>
+
+<h1>공신앱 Wireframes</h1>
+<p class="subtitle">Phase 1 MVP &mdash; 5 Screens (Light + Dark Mode)</p>
+
+<!-- ─── HOME SCREEN ─── -->
+<h2 style="text-align:center; color:#9182A8; font-size:18px; margin: 32px 0 16px;">1. 홈 화면</h2>
+<div class="screen-row">
+
+  <!-- Home Light -->
+  <div class="screen-wrapper">
+    <div class="screen-label">Light Mode</div>
+    <div class="phone">
+      <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="content">
+        <div class="app-title">
+          <h2>공신</h2>
+          <span class="badge">FOCUS</span>
+        </div>
+        <div class="card" style="margin-top:14px;">
+          <div class="dday-card">
+            <div class="dday-icon">D</div>
+            <div class="dday-info">
+              <div class="dday-label">수능</div>
+              <div class="dday-date">2026.11.19</div>
+            </div>
+            <div class="dday-count">D-292</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="section-title"><span class="section-icon">🔥</span>오늘의 공부</div>
+          <div class="summary-row">
+            <div class="summary-item">
+              <div class="summary-value">3시간 24분</div>
+              <div class="summary-label">공부 시간</div>
+            </div>
+            <div class="summary-divider"></div>
+            <div class="summary-item">
+              <div class="summary-value green">5회</div>
+              <div class="summary-label">세션 수</div>
+            </div>
+          </div>
+        </div>
+        <div class="quote-card">
+          <div class="quote-mark">"</div>
+          <div class="quote-text">천리길도 한 걸음부터</div>
+          <div class="quote-author">— 한국 속담</div>
+          <div class="quote-hint">탭하여 다음 명언</div>
+        </div>
+
+        <!-- Wallpaper Preview -->
+        <div class="wallpaper-preview">
+          <div class="wallpaper-overlay">
+            <div class="wallpaper-quote">꿈을 크게 가져라<br>그 꿈이 너를 이끌 것이다</div>
+            <div class="wallpaper-dday">수능 D-292</div>
+          </div>
+          <div class="wallpaper-credit">Photo by John Doe on Unsplash</div>
+        </div>
+
+        <div class="card">
+          <div class="focus-card">
+            <div class="focus-icon">🛡️</div>
+            <div class="focus-info">
+              <div class="focus-title">집중 모드</div>
+              <div class="focus-sub">비허용 앱을 차단합니다</div>
+            </div>
+            <div class="toggle"></div>
+          </div>
+        </div>
+        <div class="btn-primary">▶ 공부 시작하기</div>
+        <div style="height:60px"></div>
+      </div>
+      <div class="nav-bar">
+        <div class="nav-item active"><span class="nav-icon">🏠</span>홈</div>
+        <div class="nav-item"><span class="nav-icon">⏱</span>집중</div>
+        <div class="nav-item"><span class="nav-icon">📊</span>통계</div>
+        <div class="nav-item"><span class="nav-icon">⚙</span>설정</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Home Dark -->
+  <div class="screen-wrapper">
+    <div class="screen-label">Dark Mode</div>
+    <div class="phone dark">
+      <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="content">
+        <div class="app-title">
+          <h2>공신</h2>
+          <span class="badge">FOCUS</span>
+        </div>
+        <div class="card" style="margin-top:14px;">
+          <div class="dday-card">
+            <div class="dday-icon">D</div>
+            <div class="dday-info">
+              <div class="dday-label">수능</div>
+              <div class="dday-date">2026.11.19</div>
+            </div>
+            <div class="dday-count">D-292</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="section-title"><span class="section-icon">🔥</span>오늘의 공부</div>
+          <div class="summary-row">
+            <div class="summary-item">
+              <div class="summary-value">3시간 24분</div>
+              <div class="summary-label">공부 시간</div>
+            </div>
+            <div class="summary-divider"></div>
+            <div class="summary-item">
+              <div class="summary-value green">5회</div>
+              <div class="summary-label">세션 수</div>
+            </div>
+          </div>
+        </div>
+        <div class="quote-card">
+          <div class="quote-mark">"</div>
+          <div class="quote-text">노력은 배신하지 않는다</div>
+          <div class="quote-author">— 작자 미상</div>
+          <div class="quote-hint">탭하여 다음 명언</div>
+        </div>
+
+        <div class="wallpaper-preview" style="background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);">
+          <div class="wallpaper-overlay">
+            <div class="wallpaper-quote">오늘의 고생은<br>미래의 선물이다</div>
+            <div class="wallpaper-dday">수능 D-292</div>
+          </div>
+          <div class="wallpaper-credit">Photo by Jane Doe on Unsplash</div>
+        </div>
+
+        <div class="card">
+          <div class="focus-card">
+            <div class="focus-icon">🛡️</div>
+            <div class="focus-info">
+              <div class="focus-title">집중 모드</div>
+              <div class="focus-sub">허용된 앱만 사용 가능</div>
+            </div>
+            <div class="toggle on"></div>
+          </div>
+        </div>
+        <div class="btn-primary">▶ 공부 시작하기</div>
+        <div style="height:60px"></div>
+      </div>
+      <div class="nav-bar">
+        <div class="nav-item active"><span class="nav-icon">🏠</span>홈</div>
+        <div class="nav-item"><span class="nav-icon">⏱</span>집중</div>
+        <div class="nav-item"><span class="nav-icon">📊</span>통계</div>
+        <div class="nav-item"><span class="nav-icon">⚙</span>설정</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── TIMER SCREEN ─── -->
+<h2 style="text-align:center; color:#9182A8; font-size:18px; margin: 32px 0 16px;">2. 집중 타이머</h2>
+<div class="screen-row">
+
+  <!-- Timer: Idle -->
+  <div class="screen-wrapper">
+    <div class="screen-label">대기 상태 (Idle)</div>
+    <div class="phone">
+      <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="content" style="display:flex;flex-direction:column;height:556px;">
+        <div class="timer-title">집중할 과목을 선택하세요</div>
+        <div class="chip-row">
+          <div class="chip">📖 국어</div>
+          <div class="chip selected">📐 수학</div>
+          <div class="chip">🔤 영어</div>
+          <div class="chip">🔬 과학</div>
+          <div class="chip">🌏 사회</div>
+        </div>
+        <div class="mode-toggle">
+          <div class="mode-btn active">스톱워치</div>
+          <div class="mode-btn">포모도로</div>
+        </div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;">
+          <div class="timer-ring">
+            <div class="timer-time">00:00</div>
+          </div>
+        </div>
+        <div style="text-align:center;padding-bottom:60px;">
+          <div style="display:inline-block;padding:14px 48px;background:#F2C4CE;color:#fff;border-radius:14px;font-size:14px;font-weight:600;">▶ 시작</div>
+        </div>
+      </div>
+      <div class="nav-bar">
+        <div class="nav-item"><span class="nav-icon">🏠</span>홈</div>
+        <div class="nav-item active"><span class="nav-icon">⏱</span>집중</div>
+        <div class="nav-item"><span class="nav-icon">📊</span>통계</div>
+        <div class="nav-item"><span class="nav-icon">⚙</span>설정</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timer: Running -->
+  <div class="screen-wrapper">
+    <div class="screen-label">집중 중 (Running)</div>
+    <div class="phone">
+      <div class="status-bar"><span>10:17</span><span>📶 🔋</span></div>
+      <div class="content" style="display:flex;flex-direction:column;height:556px;">
+        <div class="timer-title">집중 중...</div>
+        <div class="chip-row">
+          <div class="chip" style="opacity:0.5;">📖 국어</div>
+          <div class="chip selected">📐 수학</div>
+          <div class="chip" style="opacity:0.5;">🔤 영어</div>
+        </div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;">
+          <div style="width:200px;height:200px;border-radius:50%;background:conic-gradient(#F2C4CE 0deg 120deg, #EEECF2 120deg);display:flex;align-items:center;justify-content:center;
+            -webkit-mask: radial-gradient(closest-side, transparent 92%, black 93%); mask: radial-gradient(closest-side, transparent 92%, black 93%);">
+          </div>
+          <div style="position:relative;top:-130px;text-align:center;">
+            <div class="timer-time">36:24</div>
+            <div class="pulse-dot" style="margin:4px auto;"></div>
+          </div>
+          <div style="position:relative;top:-120px;">
+            <div class="timer-elapsed">36분</div>
+          </div>
+        </div>
+        <div class="controls" style="margin-top:-100px;padding-bottom:60px;">
+          <div class="ctrl-btn stop">■</div>
+          <div class="ctrl-btn primary">⏸</div>
+          <div class="ctrl-btn secondary">↻</div>
+        </div>
+      </div>
+      <div class="nav-bar">
+        <div class="nav-item"><span class="nav-icon">🏠</span>홈</div>
+        <div class="nav-item active"><span class="nav-icon">⏱</span>집중</div>
+        <div class="nav-item"><span class="nav-icon">📊</span>통계</div>
+        <div class="nav-item"><span class="nav-icon">⚙</span>설정</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timer: Completion Dialog -->
+  <div class="screen-wrapper">
+    <div class="screen-label">완료 다이얼로그</div>
+    <div class="phone">
+      <div class="status-bar"><span>10:53</span><span>📶 🔋</span></div>
+      <div class="content" style="display:flex;flex-direction:column;height:556px;position:relative;">
+        <div style="filter:blur(2px);opacity:0.5;flex:1;padding-top:60px;text-align:center;">
+          <div class="timer-time" style="font-size:36px;">00:00</div>
+        </div>
+        <div class="dialog-overlay">
+          <div class="dialog">
+            <div class="dialog-icon">✓</div>
+            <div class="dialog-title">수고했어요!</div>
+            <div class="dialog-sub">1시간 12분 동안 집중했습니다</div>
+            <div class="dialog-btn">확인</div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-bar">
+        <div class="nav-item"><span class="nav-icon">🏠</span>홈</div>
+        <div class="nav-item active"><span class="nav-icon">⏱</span>집중</div>
+        <div class="nav-item"><span class="nav-icon">📊</span>통계</div>
+        <div class="nav-item"><span class="nav-icon">⚙</span>설정</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── STATISTICS SCREEN ─── -->
+<h2 style="text-align:center; color:#9182A8; font-size:18px; margin: 32px 0 16px;">3. 통계 대시보드</h2>
+<div class="screen-row">
+
+  <div class="screen-wrapper">
+    <div class="screen-label">캘린더 + 요약</div>
+    <div class="phone">
+      <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="content">
+        <div class="page-title">공부 통계</div>
+        <div class="page-subtitle">매일의 노력이 모여 큰 변화가 됩니다</div>
+
+        <div class="card" style="margin-top:14px;">
+          <div class="cal-header">
+            <span class="cal-nav">◂</span>
+            <span class="cal-title">2026년 1월</span>
+            <span class="cal-nav">▸</span>
+          </div>
+          <div class="cal-weekdays">
+            <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+          </div>
+          <div class="cal-grid">
+            <div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day empty"></div>
+            <div class="cal-day l1">1<span class="cal-hours">1.2h</span></div>
+            <div class="cal-day l2">2<span class="cal-hours">3.1h</span></div>
+            <div class="cal-day">3</div>
+
+            <div class="cal-day l1">4<span class="cal-hours">1.5h</span></div>
+            <div class="cal-day l3">5<span class="cal-hours">4.2h</span></div>
+            <div class="cal-day l2">6<span class="cal-hours">2.8h</span></div>
+            <div class="cal-day l4">7<span class="cal-hours">6.5h</span></div>
+            <div class="cal-day l2">8<span class="cal-hours">3.0h</span></div>
+            <div class="cal-day l5">9<span class="cal-hours">9.2h</span></div>
+            <div class="cal-day l1">10<span class="cal-hours">1.8h</span></div>
+
+            <div class="cal-day">11</div>
+            <div class="cal-day l3">12<span class="cal-hours">5.1h</span></div>
+            <div class="cal-day l4">13<span class="cal-hours">7.3h</span></div>
+            <div class="cal-day l2">14<span class="cal-hours">2.4h</span></div>
+            <div class="cal-day l1">15<span class="cal-hours">1.1h</span></div>
+            <div class="cal-day l5">16<span class="cal-hours">8.8h</span></div>
+            <div class="cal-day l3">17<span class="cal-hours">4.6h</span></div>
+
+            <div class="cal-day l2">18<span class="cal-hours">3.2h</span></div>
+            <div class="cal-day l4">19<span class="cal-hours">6.1h</span></div>
+            <div class="cal-day l1">20<span class="cal-hours">1.4h</span></div>
+            <div class="cal-day l3">21<span class="cal-hours">4.8h</span></div>
+            <div class="cal-day l2">22<span class="cal-hours">2.9h</span></div>
+            <div class="cal-day l5">23<span class="cal-hours">10.1h</span></div>
+            <div class="cal-day">24</div>
+
+            <div class="cal-day l1">25<span class="cal-hours">1.0h</span></div>
+            <div class="cal-day l3">26<span class="cal-hours">5.3h</span></div>
+            <div class="cal-day l4">27<span class="cal-hours">6.7h</span></div>
+            <div class="cal-day l2">28<span class="cal-hours">3.5h</span></div>
+            <div class="cal-day l1">29<span class="cal-hours">1.9h</span></div>
+            <div class="cal-day l3">30<span class="cal-hours">4.4h</span></div>
+            <div class="cal-day today l2">31<span class="cal-hours">3.4h</span></div>
+          </div>
+          <div class="cal-legend">
+            적음
+            <div class="cal-legend-box" style="background:rgba(184,169,201,0.08);border:1px solid #eee;"></div>
+            <div class="cal-legend-box" style="background:rgba(184,169,201,0.12);"></div>
+            <div class="cal-legend-box" style="background:rgba(184,169,201,0.25);"></div>
+            <div class="cal-legend-box" style="background:rgba(184,169,201,0.4);"></div>
+            <div class="cal-legend-box" style="background:rgba(184,169,201,0.6);"></div>
+            <div class="cal-legend-box" style="background:rgba(184,169,201,0.85);"></div>
+            많음
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">이번 달 요약</div>
+          <div class="stat-row">
+            <div class="stat-item">
+              <div class="stat-icon">⏰</div>
+              <div class="stat-value" style="color:#B8A9C9;">115.2시간</div>
+              <div class="stat-label">총 공부시간</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-icon">📅</div>
+              <div class="stat-value" style="color:#F2C4CE;">26일</div>
+              <div class="stat-label">공부한 날</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-icon">📈</div>
+              <div class="stat-value" style="color:#A8D8C8;">4.4시간</div>
+              <div class="stat-label">일 평균</div>
+            </div>
+          </div>
+        </div>
+        <div style="height:60px"></div>
+      </div>
+      <div class="nav-bar">
+        <div class="nav-item"><span class="nav-icon">🏠</span>홈</div>
+        <div class="nav-item"><span class="nav-icon">⏱</span>집중</div>
+        <div class="nav-item active"><span class="nav-icon">📊</span>통계</div>
+        <div class="nav-item"><span class="nav-icon">⚙</span>설정</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats: Day Detail -->
+  <div class="screen-wrapper">
+    <div class="screen-label">날짜 상세보기</div>
+    <div class="phone">
+      <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="content">
+        <div class="page-title">공부 통계</div>
+        <div class="page-subtitle">1월 23일 선택됨</div>
+
+        <div class="card" style="margin-top:14px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:14px;font-weight:600;color:#2D2D3A;">1월 23일</span>
+            <span style="font-size:14px;font-weight:700;color:#B8A9C9;">10.1시간</span>
+          </div>
+          <div class="pie-area">
+            <div class="pie-chart"></div>
+            <div class="pie-legend">
+              <div><span class="pie-dot" style="background:#B8A9C9;"></span>수학 3.8h</div>
+              <div><span class="pie-dot" style="background:#F2C4CE;"></span>영어 2.9h</div>
+              <div><span class="pie-dot" style="background:#A8D8C8;"></span>국어 2.1h</div>
+              <div><span class="pie-dot" style="background:#F5D5A0;"></span>과학 1.3h</div>
+            </div>
+          </div>
+          <div style="margin-top:14px;border-top:1px solid #EEECF2;padding-top:12px;">
+            <div class="session-item">
+              <div class="session-bar" style="background:#B8A9C9;"></div>
+              <span style="font-size:12px;">📐</span>
+              <span class="session-name">수학</span>
+              <span class="session-dur">2시간 15분</span>
+            </div>
+            <div class="session-item">
+              <div class="session-bar" style="background:#F2C4CE;"></div>
+              <span style="font-size:12px;">🔤</span>
+              <span class="session-name">영어</span>
+              <span class="session-dur">1시간 42분</span>
+            </div>
+            <div class="session-item">
+              <div class="session-bar" style="background:#A8D8C8;"></div>
+              <span style="font-size:12px;">📖</span>
+              <span class="session-name">국어</span>
+              <span class="session-dur">2시간 6분</span>
+            </div>
+            <div class="session-item">
+              <div class="session-bar" style="background:#B8A9C9;"></div>
+              <span style="font-size:12px;">📐</span>
+              <span class="session-name">수학</span>
+              <span class="session-dur">1시간 35분</span>
+            </div>
+            <div class="session-item">
+              <div class="session-bar" style="background:#F2C4CE;"></div>
+              <span style="font-size:12px;">🔤</span>
+              <span class="session-name">영어</span>
+              <span class="session-dur">1시간 12분</span>
+            </div>
+            <div class="session-item">
+              <div class="session-bar" style="background:#F5D5A0;"></div>
+              <span style="font-size:12px;">🔬</span>
+              <span class="session-name">과학</span>
+              <span class="session-dur">1시간 18분</span>
+            </div>
+          </div>
+        </div>
+        <div style="height:60px"></div>
+      </div>
+      <div class="nav-bar">
+        <div class="nav-item"><span class="nav-icon">🏠</span>홈</div>
+        <div class="nav-item"><span class="nav-icon">⏱</span>집중</div>
+        <div class="nav-item active"><span class="nav-icon">📊</span>통계</div>
+        <div class="nav-item"><span class="nav-icon">⚙</span>설정</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SETTINGS ─── -->
+<h2 style="text-align:center; color:#9182A8; font-size:18px; margin: 32px 0 16px;">4. 설정</h2>
+<div class="screen-row">
+
+  <div class="screen-wrapper">
+    <div class="screen-label">설정 화면</div>
+    <div class="phone">
+      <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="content">
+        <div class="page-title">설정</div>
+
+        <div class="setting-section" style="margin-top:16px;">외관</div>
+        <div class="setting-item">
+          <div class="setting-icon">☀️</div>
+          <div class="setting-info">
+            <div class="setting-title">다크 모드</div>
+            <div class="setting-sub">라이트 모드 사용 중</div>
+          </div>
+          <div class="toggle"></div>
+        </div>
+
+        <div class="setting-section">배경화면</div>
+        <div class="setting-item">
+          <div class="setting-icon">🖼️</div>
+          <div class="setting-info">
+            <div class="setting-title">배경화면 카테고리</div>
+            <div class="setting-sub">자연 풍경, 오로라, 랜드마크...</div>
+          </div>
+          <span class="setting-arrow">›</span>
+        </div>
+        <div class="setting-item">
+          <div class="setting-icon">🔄</div>
+          <div class="setting-info">
+            <div class="setting-title">자동 변경</div>
+            <div class="setting-sub">매일 새 배경화면</div>
+          </div>
+          <div class="toggle on"></div>
+        </div>
+
+        <div class="setting-section">D-Day 설정</div>
+        <div class="setting-item">
+          <div class="setting-icon">📅</div>
+          <div class="setting-info">
+            <div class="setting-title">수능</div>
+            <div class="setting-sub">2026년 11월 19일</div>
+          </div>
+          <span class="setting-arrow">›</span>
+        </div>
+        <div class="setting-item">
+          <div class="setting-icon">🏷️</div>
+          <div class="setting-info">
+            <div class="setting-title">D-Day 이름 변경</div>
+            <div class="setting-sub">현재: 수능</div>
+          </div>
+        </div>
+
+        <div class="setting-section">과목 관리</div>
+        <div class="card" style="padding:12px 14px;">
+          <div class="subject-item"><div class="subject-dot" style="background:#B8A9C9;"></div>📖 국어</div>
+          <div class="subject-item"><div class="subject-dot" style="background:#F2C4CE;"></div>📐 수학</div>
+          <div class="subject-item"><div class="subject-dot" style="background:#A8D8C8;"></div>🔤 영어</div>
+          <div class="subject-item"><div class="subject-dot" style="background:#F5D5A0;"></div>🔬 과학</div>
+          <div class="subject-item"><div class="subject-dot" style="background:#A8C8F0;"></div>🌏 사회</div>
+          <div class="subject-item"><div class="subject-dot" style="background:#F0B8B8;"></div>📜 한국사</div>
+          <div class="subject-item"><div class="subject-dot" style="background:#C8E0A8;"></div>📝 기타</div>
+          <div class="add-btn" style="margin:8px 0 0;">+ 과목 추가</div>
+        </div>
+
+        <div class="setting-section">앱 관리</div>
+        <div class="setting-item">
+          <div class="setting-icon">🛡️</div>
+          <div class="setting-info">
+            <div class="setting-title">허용 앱 관리</div>
+            <div class="setting-sub">집중 모드 중 사용할 앱을 설정합니다</div>
+          </div>
+          <span class="setting-arrow">›</span>
+        </div>
+
+        <div class="setting-section">정보</div>
+        <div class="setting-item">
+          <div class="setting-icon">ℹ️</div>
+          <div class="setting-info">
+            <div class="setting-title">공신 v1.0.0</div>
+            <div class="setting-sub">스마트한 허용 + 예쁜 동기부여</div>
+          </div>
+        </div>
+        <div style="height:60px"></div>
+      </div>
+      <div class="nav-bar">
+        <div class="nav-item"><span class="nav-icon">🏠</span>홈</div>
+        <div class="nav-item"><span class="nav-icon">⏱</span>집중</div>
+        <div class="nav-item"><span class="nav-icon">📊</span>통계</div>
+        <div class="nav-item active"><span class="nav-icon">⚙</span>설정</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── WHITELIST ─── -->
+<h2 style="text-align:center; color:#9182A8; font-size:18px; margin: 32px 0 16px;">5. 허용 앱 관리</h2>
+<div class="screen-row">
+
+  <div class="screen-wrapper">
+    <div class="screen-label">앱 화이트리스트</div>
+    <div class="phone">
+      <div class="status-bar"><span>9:41</span><span>📶 🔋</span></div>
+      <div class="content">
+        <div style="text-align:center;padding:14px;font-size:15px;font-weight:600;color:#2D2D3A;">
+          ← 허용 앱 관리
+        </div>
+
+        <div class="info-banner">
+          <span class="info-icon">ℹ️</span>
+          <span>집중 모드 중 사용할 수 있는 앱을 선택하세요.<br>전화, 문자, 시계는 기본으로 허용됩니다.</span>
+        </div>
+
+        <div class="search-bar">
+          🔍 앱 검색...
+        </div>
+
+        <div class="filter-row">
+          <div class="filter-chip active">전체</div>
+          <div class="filter-chip">허용된 앱만</div>
+          <span class="filter-count">12개 허용</span>
+        </div>
+
+        <div class="app-item">
+          <div class="app-icon">📱</div>
+          <div class="app-info">
+            <div class="app-name">카카오톡</div>
+            <div class="app-pkg">com.kakao.talk</div>
+          </div>
+          <div class="toggle on"></div>
+        </div>
+        <div class="app-item">
+          <div class="app-icon">📺</div>
+          <div class="app-info">
+            <div class="app-name">EBS 온라인클래스</div>
+            <div class="app-pkg">kr.co.ebs.xenia</div>
+          </div>
+          <div class="toggle on"></div>
+        </div>
+        <div class="app-item">
+          <div class="app-icon">📖</div>
+          <div class="app-info">
+            <div class="app-name">네이버 사전</div>
+            <div class="app-pkg">com.nhn.android.naverdic</div>
+          </div>
+          <div class="toggle on"></div>
+        </div>
+        <div class="app-item">
+          <div class="app-icon">🍽️</div>
+          <div class="app-info">
+            <div class="app-name">급식 알리미</div>
+            <div class="app-pkg">com.school.lunch</div>
+          </div>
+          <div class="toggle on"></div>
+        </div>
+        <div class="app-item">
+          <div class="app-icon" style="background:rgba(229,115,115,0.1);">📷</div>
+          <div class="app-info">
+            <div class="app-name" style="color:#E57373;">Instagram</div>
+            <div class="app-pkg">com.instagram.android</div>
+          </div>
+          <div class="toggle"></div>
+        </div>
+        <div class="app-item">
+          <div class="app-icon" style="background:rgba(229,115,115,0.1);">🎮</div>
+          <div class="app-info">
+            <div class="app-name" style="color:#E57373;">YouTube</div>
+            <div class="app-pkg">com.google.android.youtube</div>
+          </div>
+          <div class="toggle"></div>
+        </div>
+        <div class="app-item">
+          <div class="app-icon" style="background:rgba(229,115,115,0.1);">🎵</div>
+          <div class="app-info">
+            <div class="app-name" style="color:#E57373;">TikTok</div>
+            <div class="app-pkg">com.zhiliaoapp.musically</div>
+          </div>
+          <div class="toggle"></div>
+        </div>
+        <div class="app-item">
+          <div class="app-icon" style="background:rgba(229,115,115,0.1);">🎮</div>
+          <div class="app-info">
+            <div class="app-name" style="color:#E57373;">브롤스타즈</div>
+            <div class="app-pkg">com.supercell.brawlstars</div>
+          </div>
+          <div class="toggle"></div>
+        </div>
+        <div style="height:60px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── WALLPAPER PREVIEW ─── -->
+<h2 style="text-align:center; color:#9182A8; font-size:18px; margin: 32px 0 16px;">6. 배경화면 프리뷰 (Phase 2 - Unsplash/Pixabay)</h2>
+<div class="screen-row">
+
+  <div class="screen-wrapper">
+    <div class="screen-label">자연 / 오로라</div>
+    <div class="phone" style="background:#000;">
+      <div class="status-bar" style="color:#fff;"><span>9:41</span><span>📶 🔋</span></div>
+      <div style="height:604px;background:linear-gradient(180deg,#0b1628 0%,#1a3a5c 30%,#2d6b4f 60%,#1a3a2f 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;">
+        <!-- Simulated aurora -->
+        <div style="position:absolute;top:80px;width:260px;height:120px;background:linear-gradient(135deg,rgba(100,220,160,0.3),rgba(80,180,220,0.2),rgba(160,120,220,0.3));border-radius:50%;filter:blur(30px);"></div>
+        <div style="position:absolute;top:60px;width:200px;height:80px;background:linear-gradient(90deg,rgba(100,240,180,0.2),rgba(120,200,255,0.15));border-radius:50%;filter:blur(20px);"></div>
+
+        <div style="z-index:2;text-align:center;color:#fff;padding:20px;">
+          <div style="font-size:11px;opacity:0.6;letter-spacing:2px;margin-bottom:8px;">오늘의 명언</div>
+          <div style="font-size:18px;font-weight:600;line-height:1.6;text-shadow:0 2px 8px rgba(0,0,0,0.4);">
+            꿈을 크게 가져라<br>그 꿈이 너를 이끌 것이다
+          </div>
+          <div style="font-size:10px;opacity:0.5;margin-top:6px;">— 괴테</div>
+          <div style="margin-top:24px;font-size:28px;font-weight:700;letter-spacing:-1px;text-shadow:0 2px 8px rgba(0,0,0,0.4);">
+            수능 D-292
+          </div>
+          <div style="margin-top:6px;font-size:10px;opacity:0.5;">2026.11.19</div>
+        </div>
+        <div style="position:absolute;bottom:8px;font-size:8px;color:rgba(255,255,255,0.4);">Photo by Jonatan Pie on Unsplash</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-wrapper">
+    <div class="screen-label">도시 야경</div>
+    <div class="phone" style="background:#000;">
+      <div class="status-bar" style="color:#fff;"><span>9:41</span><span>📶 🔋</span></div>
+      <div style="height:604px;background:linear-gradient(180deg,#0a0a1a 0%,#1a1a3a 30%,#2a1a3a 60%,#1a0a2a 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;">
+        <!-- City lights simulation -->
+        <div style="position:absolute;bottom:150px;width:280px;height:60px;background:linear-gradient(90deg,rgba(255,200,100,0.2),rgba(255,150,80,0.15),rgba(200,150,255,0.2));filter:blur(15px);"></div>
+        <div style="position:absolute;bottom:120px;width:240px;height:40px;display:flex;gap:3px;align-items:flex-end;opacity:0.3;">
+          <div style="width:8px;height:35px;background:#aaa;"></div>
+          <div style="width:6px;height:28px;background:#999;"></div>
+          <div style="width:10px;height:40px;background:#bbb;"></div>
+          <div style="width:5px;height:20px;background:#888;"></div>
+          <div style="width:12px;height:38px;background:#aaa;"></div>
+          <div style="width:7px;height:25px;background:#999;"></div>
+          <div style="width:9px;height:32px;background:#bbb;"></div>
+          <div style="width:6px;height:22px;background:#888;"></div>
+          <div style="width:11px;height:36px;background:#aaa;"></div>
+          <div style="width:5px;height:18px;background:#999;"></div>
+          <div style="width:8px;height:30px;background:#bbb;"></div>
+          <div style="width:7px;height:26px;background:#888;"></div>
+        </div>
+
+        <div style="z-index:2;text-align:center;color:#fff;padding:20px;">
+          <div style="font-size:11px;opacity:0.6;letter-spacing:2px;margin-bottom:8px;">오늘의 명언</div>
+          <div style="font-size:18px;font-weight:600;line-height:1.6;text-shadow:0 2px 8px rgba(0,0,0,0.4);">
+            미래는 현재 우리가<br>무엇을 하느냐에 달려 있다
+          </div>
+          <div style="font-size:10px;opacity:0.5;margin-top:6px;">— 마하트마 간디</div>
+          <div style="margin-top:24px;font-size:28px;font-weight:700;letter-spacing:-1px;text-shadow:0 2px 8px rgba(0,0,0,0.4);">
+            수능 D-292
+          </div>
+          <div style="margin-top:6px;font-size:10px;opacity:0.5;">2026.11.19</div>
+        </div>
+        <div style="position:absolute;bottom:8px;font-size:8px;color:rgba(255,255,255,0.4);">Photo by Pawel Nolbert on Unsplash</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-wrapper">
+    <div class="screen-label">산 / 자연</div>
+    <div class="phone" style="background:#000;">
+      <div class="status-bar" style="color:#fff;"><span>9:41</span><span>📶 🔋</span></div>
+      <div style="height:604px;background:linear-gradient(180deg,#87CEEB 0%,#B0D8F0 20%,#ddd 45%,#998877 50%,#665544 60%,#3a5a3a 80%,#2a4a2a 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;">
+        <!-- Mountain silhouette -->
+        <div style="position:absolute;top:200px;width:0;height:0;border-left:140px solid transparent;border-right:140px solid transparent;border-bottom:180px solid rgba(100,90,80,0.5);"></div>
+        <div style="position:absolute;top:230px;left:40px;width:0;height:0;border-left:100px solid transparent;border-right:100px solid transparent;border-bottom:150px solid rgba(80,70,60,0.4);"></div>
+        <!-- Snow cap -->
+        <div style="position:absolute;top:200px;width:0;height:0;border-left:40px solid transparent;border-right:40px solid transparent;border-bottom:50px solid rgba(255,255,255,0.6);"></div>
+
+        <div style="z-index:2;text-align:center;color:#fff;padding:20px;margin-top:-60px;">
+          <div style="font-size:11px;opacity:0.8;letter-spacing:2px;margin-bottom:8px;text-shadow:0 1px 4px rgba(0,0,0,0.3);">오늘의 명언</div>
+          <div style="font-size:18px;font-weight:600;line-height:1.6;text-shadow:0 2px 8px rgba(0,0,0,0.5);">
+            천리길도<br>한 걸음부터
+          </div>
+          <div style="font-size:10px;opacity:0.7;margin-top:6px;text-shadow:0 1px 4px rgba(0,0,0,0.3);">— 한국 속담</div>
+          <div style="margin-top:24px;font-size:28px;font-weight:700;letter-spacing:-1px;text-shadow:0 2px 8px rgba(0,0,0,0.5);">
+            수능 D-292
+          </div>
+          <div style="margin-top:6px;font-size:10px;opacity:0.7;text-shadow:0 1px 4px rgba(0,0,0,0.3);">2026.11.19</div>
+        </div>
+        <div style="position:absolute;bottom:8px;font-size:8px;color:rgba(255,255,255,0.5);">Photo by Samuel Ferrara on Unsplash</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center;color:#B8B8C4;font-size:12px;margin:40px 0;">
+  공신앱 Phase 1 Wireframes &mdash; Flutter + Android
+</div>
+
+</body>
+</html>

@@ -4,7 +4,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 import '../providers/theme_provider.dart';
 import '../providers/study_provider.dart';
+import '../providers/wallpaper_provider.dart';
 import '../models/subject.dart';
+import '../services/wallpaper_service.dart';
 import 'whitelist_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -31,6 +33,11 @@ class SettingsScreen extends StatelessWidget {
             // Appearance
             _SectionHeader(title: '외관'),
             const _ThemeToggleTile(),
+            const SizedBox(height: 16),
+
+            // Wallpaper
+            _SectionHeader(title: '배경화면'),
+            const _WallpaperSettings(),
             const SizedBox(height: 16),
 
             // D-Day
@@ -405,6 +412,207 @@ class _SubjectManagement extends StatelessWidget {
               }
             },
             child: const Text('추가'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _WallpaperSettings extends StatelessWidget {
+  const _WallpaperSettings();
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<WallpaperProvider>(
+      builder: (context, wallpaper, _) {
+        return Column(
+          children: [
+            _SettingsTile(
+              icon: Icons.image_outlined,
+              title: '카테고리',
+              subtitle: '${wallpaper.selectedCategory.emoji} ${wallpaper.selectedCategory.nameKo}',
+              trailing: const Icon(Icons.chevron_right_rounded, size: 20),
+              onTap: () => _showCategoryPicker(context, wallpaper),
+            ),
+            _SettingsTile(
+              icon: Icons.autorenew_rounded,
+              title: '매일 자동 변경',
+              subtitle: wallpaper.autoChange ? '매일 새 배경화면' : '수동으로 변경',
+              trailing: Switch(
+                value: wallpaper.autoChange,
+                onChanged: (v) => wallpaper.setAutoChange(v),
+              ),
+            ),
+            _SettingsTile(
+              icon: Icons.vpn_key_outlined,
+              title: 'API 키 설정',
+              subtitle: wallpaper.hasApiKey ? '설정 완료' : '배경화면을 사용하려면 API 키가 필요합니다',
+              trailing: Icon(
+                wallpaper.hasApiKey ? Icons.check_circle : Icons.chevron_right_rounded,
+                size: 20,
+                color: wallpaper.hasApiKey ? const Color(0xFFA8D8C8) : null,
+              ),
+              onTap: () => _showApiKeyDialog(context, wallpaper),
+            ),
+            if (wallpaper.hasApiKey)
+              _SettingsTile(
+                icon: Icons.refresh_rounded,
+                title: '지금 배경화면 바꾸기',
+                subtitle: '새로운 배경화면을 불러옵니다',
+                onTap: wallpaper.refreshWallpaper,
+              ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showCategoryPicker(BuildContext context, WallpaperProvider wallpaper) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (context) => Container(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                width: 36,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: colorScheme.outline,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text('배경화면 카테고리', style: theme.textTheme.headlineSmall),
+            const SizedBox(height: 16),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: WallpaperCategory.all.map((category) {
+                final isSelected = wallpaper.selectedCategory.id == category.id;
+                return GestureDetector(
+                  onTap: () {
+                    wallpaper.selectCategory(category);
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: isSelected
+                          ? colorScheme.primary.withOpacity(0.15)
+                          : colorScheme.surfaceContainerHighest,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: isSelected
+                            ? colorScheme.primary.withOpacity(0.4)
+                            : Colors.transparent,
+                        width: 1.5,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(category.emoji, style: const TextStyle(fontSize: 16)),
+                        const SizedBox(width: 6),
+                        Text(
+                          category.nameKo,
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                            color: isSelected
+                                ? colorScheme.primary
+                                : colorScheme.onSurface,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+            const SizedBox(height: 20),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showApiKeyDialog(BuildContext context, WallpaperProvider wallpaper) {
+    final unsplashController = TextEditingController();
+    final pixabayController = TextEditingController();
+    final theme = Theme.of(context);
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: const Text('API 키 설정'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '무료 API 키를 발급받아 입력하세요.\n매일 예쁜 배경화면이 자동으로 바뀝니다.',
+              style: theme.textTheme.bodySmall?.copyWith(height: 1.5),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: unsplashController,
+              decoration: InputDecoration(
+                labelText: 'Unsplash API Key',
+                hintText: 'unsplash.com/developers 에서 발급',
+                hintStyle: const TextStyle(fontSize: 10),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              style: const TextStyle(fontSize: 12),
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: pixabayController,
+              decoration: InputDecoration(
+                labelText: 'Pixabay API Key (선택)',
+                hintText: 'pixabay.com/api/docs 에서 발급',
+                hintStyle: const TextStyle(fontSize: 10),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              style: const TextStyle(fontSize: 12),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('취소'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              if (unsplashController.text.isNotEmpty) {
+                await wallpaper.setUnsplashKey(unsplashController.text.trim());
+              }
+              if (pixabayController.text.isNotEmpty) {
+                await wallpaper.setPixabayKey(pixabayController.text.trim());
+              }
+              if (wallpaper.hasApiKey) {
+                await wallpaper.fetchDailyWallpaper();
+              }
+              if (context.mounted) Navigator.pop(context);
+            },
+            child: const Text('저장'),
           ),
         ],
       ),
